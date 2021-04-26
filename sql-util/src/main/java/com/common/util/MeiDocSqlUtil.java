@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.common.model.SqlFieldDefinition;
-import com.common.service.SqlGenerateService;
 import com.common.util.enums.SQLFieldTypeEnum;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -434,24 +433,4 @@ public class MeiDocSqlUtil {
 
     }
 
-    public static void main(String[] args) {
-
-        String str = "primary key (`id`),";
-
-        str = "asdas    db_ddd.t_ddd\r\n" + "sadasd  的雷克萨进度款拉丝机大数据库里\r\n" + "dasd    primary key (`qweqwl`),\r\n"
-                + "UNIQUE INDEX `uk_parent_id` (`parent_id`),\r\n" + "index `idx_parent_id` (`parent_id`)\r\n"
-                + "dsalkj_dsa  int y dasjkl\r\n" + "qweqwl varchar(42) n \r\n" + "dslakdas varchar(42) n\r\n"
-                + "dsaldal int n";
-
-        List<SqlFieldDefinition> splitWord = splitWord(str);
-
-        for (SqlFieldDefinition string : splitWord) {
-            System.out.println(string);
-        }
-
-        SqlGenerateService service = new SqlGenerateService();
-        String sql = service.generateCreateSql(splitWord);
-        System.out.println(sql);
-
-    }
 }
