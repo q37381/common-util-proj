@@ -10,7 +10,9 @@ public enum SQLFieldTypeEnum {
 
     INDEX("idx", "INDEX"),
 
-    FIELD(null, null),
+    SIGNED_FIELD(null, null),
+
+    UNSIGNED_FIELD("unsign", "UNSIGNED"),
 
     ;
 
