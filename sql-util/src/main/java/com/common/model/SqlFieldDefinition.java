@@ -1,27 +1,33 @@
 package com.common.model;
 
-import com.common.util.enums.SQLFieldTypeEnum;
+import java.util.List;
+
+import com.common.util.enums.MySQLPartTypeEnum;
+import com.google.common.collect.Lists;
 
 /**
- * sql字段定义 TODOM 后期需优化
+ * sql字段定义
  * 
  * @author Nbb
  *
  */
-public class SqlFieldDefinition {
+public class SqlFieldDefinition implements Comparable<SqlFieldDefinition> {
 
+    /**
+     * 表名，索引名，字段名
+     */
     private String name;
 
     /**
-     * 主键索引 使用这个字段
+     * 索引使用字段
      */
-    private String field;
+    private List<String> indexFieldList;
 
     private String fieldType;
 
-    private SQLFieldTypeEnum type;
+    private MySQLPartTypeEnum sqlPart;
 
-    private String nullFlag;
+    private boolean required;
 
     private String comment;
 
@@ -29,17 +35,18 @@ public class SqlFieldDefinition {
      * 字段
      * 
      * @param name
-     * @param type
+     * @param sqlPart
      * @param fieldType
-     * @param nullFlag
+     * @param required
      * @param comment
      */
-    public SqlFieldDefinition(String name, SQLFieldTypeEnum type, String fieldType, String nullFlag, String comment) {
+    public SqlFieldDefinition(String name, MySQLPartTypeEnum sqlPart, String fieldType, boolean required,
+            String comment) {
         super();
         this.name = name;
-        this.type = type;
+        this.sqlPart = sqlPart;
         this.fieldType = fieldType;
-        this.nullFlag = nullFlag;
+        this.required = required;
         this.comment = comment;
     }
 
@@ -47,31 +54,12 @@ public class SqlFieldDefinition {
      * 表
      * 
      * @param name
-     * @param type
+     * @param sqlPart
      */
-    public SqlFieldDefinition(String name, SQLFieldTypeEnum type) {
+    public SqlFieldDefinition(String name, MySQLPartTypeEnum sqlPart) {
         super();
         this.name = name;
-        this.type = type;
-    }
-
-    /**
-     * 索引
-     * 
-     * @param name
-     * @param field
-     * @param type
-     */
-    public SqlFieldDefinition(String name, String field, SQLFieldTypeEnum type) {
-        super();
-        this.name = name;
-        this.field = field;
-        this.type = type;
-    }
-
-    public SqlFieldDefinition(SQLFieldTypeEnum type) {
-        super();
-        this.type = type;
+        this.sqlPart = sqlPart;
     }
 
     public String getName() {
@@ -82,36 +70,12 @@ public class SqlFieldDefinition {
         this.name = name;
     }
 
-    public String getField() {
-        return field;
-    }
-
-    public void setField(String field) {
-        this.field = field;
-    }
-
     public String getFieldType() {
         return fieldType;
     }
 
     public void setFieldType(String fieldType) {
         this.fieldType = fieldType;
-    }
-
-    public SQLFieldTypeEnum getType() {
-        return type;
-    }
-
-    public void setType(SQLFieldTypeEnum type) {
-        this.type = type;
-    }
-
-    public String getNullFlag() {
-        return nullFlag;
-    }
-
-    public void setNullFlag(String nullFlag) {
-        this.nullFlag = nullFlag;
     }
 
     public String getComment() {
@@ -122,9 +86,40 @@ public class SqlFieldDefinition {
         this.comment = comment;
     }
 
-    @Override
-    public String toString() {
-        return "SqlFieldDefinition [name=" + name + ", field=" + field + ", fieldType=" + fieldType + ", type=" + type
-                + ", nullFlag=" + nullFlag + ", comment=" + comment + "]";
+    public MySQLPartTypeEnum getSqlPart() {
+        return sqlPart;
     }
+
+    public void setSqlPart(MySQLPartTypeEnum sqlPart) {
+        this.sqlPart = sqlPart;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    public List<String> getIndexFieldList() {
+        return indexFieldList;
+    }
+
+    public void setIndexFieldList(List<String> indexFieldList) {
+        this.indexFieldList = indexFieldList;
+    }
+
+    public void addIndexField(String indexField) {
+        if (indexFieldList == null) {
+            indexFieldList = Lists.newArrayList();
+        }
+        indexFieldList.add(indexField);
+    }
+
+    @Override
+    public int compareTo(SqlFieldDefinition o) {
+        return Integer.compare(this.sqlPart.getSortNo(), o.getSqlPart().getSortNo());
+    }
+
 }
